@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+<!-- Structure HTML du menu -->
+<nav>
+
+
+        <ul>
+            <li class="deroulant"><a href="{% url 'task_form' %}">Formulaire du Rendement quotidien &ensp;</a></li>
+            <li class="deroulant"><a href="{% url 'monthly_reports' %}">Rapports Mensuels &ensp;</a></li>
+            <!-- Ajoutez d'autres liens de menu ici -->
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">À propos</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+
+</body>
+</html>

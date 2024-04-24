@@ -1,0 +1,79 @@
+<!-- monthly_reports.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rapport</title>
+    <style>
+        /* CSS for styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light gray background */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff; /* White background for main content */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        }
+        h1 {
+            text-align: center;
+            color: #007bff; /* Blue color for title */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table th {
+            background-color: #007bff; /* Blue background for table headers */
+            color: #fff; /* White text color for table headers */
+        }
+        .logo {
+            max-width: 100px;
+            margin-right: 20px; /* Add right margin for spacing */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rapport Mensuel</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Heure de Début</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Nom du Technicien</th>
+                    <th>Emplacement</th>
+                    <th>Équipement/Lot</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.start_time }}</td>
+                    <td>{{ task.date }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.technician_name }}</td>
+                    <td>{{ task.location }}</td>
+                    <td>{{ task.equipment_lot }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">Aucune tâche enregistrée.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'download_csv' %}" download>Télécharger le rapport CSV</a>
+        <a href="{% url 'download_pdf' %}" download>Télécharger le rapport PDF</a>
+    </div>
+</body>
+</html>

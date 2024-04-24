@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de Performance Quotidienne</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Datepicker CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f0f7ff; /* Couleur de fond bleu clair */
+            padding-top: 50px; /* Ajouter un padding en haut */
+        }
+        .container {
+            max-width: 600px; /* Largeur maximale du conteneur du formulaire */
+            background-color: #ffffff; /* Fond blanc pour le formulaire */
+            padding: 30px; /* Ajouter du padding à l'intérieur du conteneur */
+            border-radius: 10px; /* Ajouter un bord arrondi */
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            color: #3e6eb0; /* Couleur du texte principale */
+        }
+        .form-control {
+            border-color: #6c8cdd; /* Couleur de bordure bleue pour les contrôles du formulaire */
+        }
+        .btn-primary {
+            background-color: #3e6eb0; /* Fond de bouton bleu foncé */
+            border-color: #3e6eb0; /* Couleur de bordure du bouton bleu foncé */
+        }
+        .btn-primary:hover {
+            background-color: #345492; /* Bleu plus foncé au survol */
+            border-color: #345492;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Rendement Quotidienne</h1>
+        <form method="post" action="{% url 'task_form' %}" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_start_time" class="form-label">Heure de Début :</label>
+                {{ form.start_time }}
+            </div>
+            <div class="mb-3">
+                <label for="id_description" class="form-label">Description :</label>
+                <textarea class="form-control" id="id_description" name="description" rows="4" maxlength="200" placeholder="Entrez la description..." required></textarea>
+                <small class="text-muted"><span id="charCount">0</span>/200 caractères maximum</small>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="id_equipment_lot" class="form-label">Équipement/Lot :</label>
+                    <select class="form-select" id="id_equipment_lot" name="equipment_lot">
+                        <option value="" selected disabled>Sélectionnez l'Équipement/Lot</option>
+                        <option value="Plomberie">Plomberie</option>
+                        <option value="Climatisation">Climatisation</option>
+                        <option value="Menuiserie">Menuiserie</option>
+                        <option value="Détection Incendie">Détection Incendie</option>
+                        <option value="Électricité">Électricité</option>
+                        <option value="SOE">SOE</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="id_technician_name" class="form-label">Nom du Technicien :</label>
+                    <!-- Menu déroulant pour le nom du technicien -->
+                    <select class="form-select" id="id_technician_name" name="technician_name">
+                        <option value="" selected disabled>Sélectionnez le Technicien</option>
+                        <option value="Technicien 1">Mandor</option>
+                        <option value="Technicien 2">Majidi</option>
+                        <option value="Technicien 3">Otmani</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="id_location" class="form-label">Emplacement :</label>
+                <select class="form-select" id="id_location" name="location">
+                    <option value="" selected disabled>Sélectionnez l'Emplacement</option>
+                    <option value="Bâtiment">Bâtiment</option>
+                    <option value="Cafétéria Nissan">Cafétéria Nissan</option>
+                    <option value="Cafétéria Renault">Cafétéria Renault</option>
+                    <option value="HJD">HJD</option>
+                    <option value="IMC">IMC</option>
+                    <option value="Salle d'Infirmier">Salle d'Infirmier</option>
+                    <option value="Toiture">Toiture</option>
+                    <option value="Vestiaire Nissan">Vestiaire Nissan</option>
+                    <option value="MAF">MAF</option>
+                    <option value="Local IT">Local IT</option>
+                    <option value="Open Space">Open Space</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="id_date" class="form-label">Date :</label>
+                <input type="text" class="form-control" id="id_date" name="date" placeholder="Sélectionnez une date" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Soumettre</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS et jQuery (nécessaires pour les plugins JavaScript de Bootstrap) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Datepicker JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        // Initialisation du sélecteur de date pour le champ 'date'
+        $(document).ready(function() {
+            $('#id_date').datepicker({
+                format: 'yyyy-mm-dd',  // Format de date
+                autoclose: true,       // Fermer le sélecteur de date après la sélection
+                todayHighlight: true   // Mettre en surbrillance la date d'aujourd'hui
+            });
+
+            // Compteur de caractères pour le champ de description
+            $('#id_description').on('input', function() {
+                var charCount = $(this).val().length;
+                $('#charCount').text(charCount);
+            });
+        });
+    </script>
+</body>
+</html>
